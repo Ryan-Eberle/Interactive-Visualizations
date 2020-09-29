@@ -53,8 +53,32 @@ function createPlots(indexNumber) {
         // .map for otu_labels
         var otuLabel = data.samples.map(data =>(data.otu_labels).slice(0,10))
         var labelBubble = data.samples.map(data =>(data.otu_labels))
-
+        // wfreq key in metadata for gauge chart 
+        var washData = (data.metadata)[indexNumber]['wfreq']
         // create function for plotly of bar chart
+        function gaugeChart(){
+            var gauge = {
+                type: 'indicator',
+                mode: 'gauge+number',
+                value: 5,
+                title: "Washing Frequency",
+                steps: [
+                    {range:[0,1]},
+                    {range:[1,2]},
+                    {range:[2,3]},
+                    {range:[3,4]},
+                    {range:[4,5]},
+                    {range:[5,6]},
+                    {range:[6,7]},
+                    {range:[7,8]},
+                    {range:[8,9]},
+                ],
+            };
+            var layout = {
+
+            }   
+            
+        }
         function barChart(){
             var barChart = {
                 x: smpValue[indexNumber],
