@@ -33,6 +33,7 @@ function dropDownChange() {
             createPlots(indexNumber)
             // call up createMetaData
             createMetaData(indexNumber)
+            
         });
     }
     //variable for the dropDownPick and assign that back into function
@@ -54,30 +55,35 @@ function createPlots(indexNumber) {
         var otuLabel = data.samples.map(data =>(data.otu_labels).slice(0,10))
         var labelBubble = data.samples.map(data =>(data.otu_labels))
         // wfreq key in metadata for gauge chart 
-        var washData = (data.metadata)[indexNumber]['wfreq']
+        var washData = (data.metadata)['wfreq']
         // create function for plotly of bar chart
         function gaugeChart(){
-            var gauge = {
+            var gauge = [
+                {
+                domain: {x:[0,1],y:[0,1]},    
                 type: 'indicator',
-                mode: 'gauge+number',
-                value: 5,
+                mode: 'gauge',
+                value: washData[indexNumber],
                 title: "Washing Frequency",
-                steps: [
-                    {range:[0,1]},
-                    {range:[1,2]},
-                    {range:[2,3]},
-                    {range:[3,4]},
-                    {range:[4,5]},
-                    {range:[5,6]},
-                    {range:[6,7]},
-                    {range:[7,8]},
-                    {range:[8,9]},
-                ],
-            };
-            var layout = {
-
-            }   
+                // steps: [
+                //     {range:[0,1]},
+                //     {range:[1,2]},
+                //     {range:[2,3]},
+                //     {range:[3,4]},
+                //     {range:[4,5]},
+                //     {range:[5,6]},
+                //     {range:[6,7]},
+                //     {range:[7,8]},
+                //     {range:[8,9]},
+                // ],
+            }];
             
+            var layout = {
+                width: 600,
+                height: 500,
+                margin: {t:0,b:0,},
+            };
+            Plotly.newPlot('gauge', [gauge],layout);       
         }
         function barChart(){
             var barChart = {
@@ -116,6 +122,7 @@ function createPlots(indexNumber) {
             var bubblelayout = {
                 title: '<b>Demographics of Microbe Abundance',
                 showlegend: false,
+                height: 700,
                 width: 1000,
                 yaxis: {
                     title: "Values",
@@ -128,7 +135,8 @@ function createPlots(indexNumber) {
             Plotly.newPlot('bubble', [bubbleChart],bubblelayout);    
         }
         barChart();
-        bubbleChart()
+        bubbleChart();
+        gaugeChart()
     });
 }
 
